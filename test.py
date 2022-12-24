@@ -2,8 +2,10 @@
 Testing env for spotify API shenanigans
 """
 
+import time
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import os
 import cred
 
 
@@ -21,20 +23,32 @@ def create_playlist(sp, user, name="test"):
 
 
 def main():
+    #
+    os.startfile("C:/Users/Ryan Pretzel/AppData/Roaming/Spotify/Spotify.exe")
+
+    # make sure spotify has time to properly boot
+    time.sleep(10)
+
     scope = "user-read-playback-state"
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=cred.client_id, client_secret=cred.client_secret,
                                                    redirect_uri=cred.redirect_uri, scope=scope))
+
     user = sp.me()
     playback = sp.current_playback()
     print("\nUser:", user)
     print("\nPlayback:", playback)
 
-    if playback is None or playback['is_playing'] is False:
-        try:
-            sp.auth_manager.scope = "user-modify-playback-state"
-            sp.start_playback(device_id=playback['device']['id'])
-        except:
-            print("Error Occured")
+    devices = sp.devices()
+    print(devices)
+
+    # if playback is None or playback['is_playing'] is False:
+    #     try:
+    #         sp.auth_manager.scope = "user-modify-playback-state"
+    #         sp.start_playback(device_id=playback['device']['id'])
+    #     except:
+    #         print("Error Occured")
+
+    sp.auth_manager.scope = "user-modify-playback-state"
 
 
 if __name__ == "__main__":
