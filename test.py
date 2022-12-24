@@ -4,7 +4,6 @@ Testing env for spotify API shenanigans
 
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-import cred
 
 
 def print_recently_played(sp):
