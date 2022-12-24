@@ -49,6 +49,7 @@ def main():
     #         print("Error Occured")
 
     sp.auth_manager.scope = "user-modify-playback-state"
+    sp.start_playback(device_id=cred.desktop_id, context_uri=cred.playlist_id)
 
 
 if __name__ == "__main__":
