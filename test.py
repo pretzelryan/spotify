@@ -23,8 +23,8 @@ def create_playlist(sp, user, name="test"):
 
 
 def main():
-    #
-    os.startfile("C:/Users/Ryan Pretzel/AppData/Roaming/Spotify/Spotify.exe")
+    # boot spotify on start
+    os.startfile(cred.spotify_path)
 
     # make sure spotify has time to properly boot
     time.sleep(10)
