@@ -13,7 +13,6 @@ import cred
 
 
 def disp_user(sp):
-    # display relevant user data
     user = sp.me()
     print("\nUser:", user)
 
@@ -25,15 +24,16 @@ def disp_user(sp):
 
 
 def start_playback(sp, playlist):
-    # set scope and start playback
-    sp.auth_manager.scope = "user-modify-playback-state"
-    sp.start_playback(device_id=cred.desktop_id, context_uri=playlist)
+    # function to start a playback of selected playlist
+    try:
+        sp.auth_manager.scope = "user-modify-playback-state"
+        sp.start_playback(device_id=cred.desktop_id, context_uri=playlist)
+        sp.volume(0, device_id=cred.desktop_id)
+        sp.shuffle(True, device_id=cred.desktop_id)
+        print(f"[{datetime.datetime.now()}] Playback started")
 
-    # set volume to mute and shuffle (which also ensures repeat) to run in the background
-    sp.volume(0)
-    sp.shuffle(True)
-
-    print(f"[{datetime.datetime.now()}] Playback started")
+    except spotipy.exceptions.SpotifyException as e:
+        print(f"[{datetime.datetime.now()}] Spotify Exception Occurred\n", e)
 
 
 def check_playback(sp):
@@ -41,9 +41,9 @@ def check_playback(sp):
     sp.auth_manager.scope = "user-read-playback-state"
     playback = sp.current_playback()
 
+    print(f"[{datetime.datetime.now()}] Playback checked")
     if playback is None or playback['is_playing'] is False:
         start_playback(sp, cred.playlist_id)
-    print(f"[{datetime.datetime.now()}] Playback checked")
 
 
 def main():
