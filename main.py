@@ -30,7 +30,8 @@ def start_playback(sp, playlist):
         sp.start_playback(device_id=cred.desktop_id, context_uri=playlist)
         sp.volume(0, device_id=cred.desktop_id)
         sp.shuffle(True, device_id=cred.desktop_id)
-        print(f"[{datetime.datetime.now()}] Playback started")
+        sp.repeat('context', device_id=cred.desktop_id)
+        print(f"[{datetime.datetime.now()}] NOTICE: Playback started")
 
     except spotipy.exceptions.SpotifyException as e:
         print(f"[{datetime.datetime.now()}] Spotify Exception Occurred\n", e)
@@ -47,10 +48,8 @@ def check_playback(sp):
 
 
 def main():
-    # boot spotify on start
+    # start spotify application
     os.startfile(cred.spotify_path)
-
-    # make sure spotify has time to properly boot
     time.sleep(10)
 
     # set up proper scope and initialize spotify object
@@ -58,6 +57,7 @@ def main():
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=cred.client_id, client_secret=cred.client_secret,
                                                    redirect_uri=cred.redirect_uri, scope=scope))
 
+    # after initialization, create schedule to check playback
     print(f"[{datetime.datetime.now()}] Initialization Complete")
     schedule = BlockingScheduler()
     schedule.add_job(lambda: check_playback(sp), 'interval', minutes=1)
