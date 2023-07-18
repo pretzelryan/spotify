@@ -48,12 +48,12 @@ def main():
     #     except:
     #         print("Error Occured")
 
-    sp.auth_manager.scope = "user-modify-playback-state"
-    sp.start_playback(device_id=cred.desktop_id, context_uri=cred.playlist_id)
+    # sp.auth_manager.scope = "user-modify-playback-state"
+    # sp.start_playback(device_id=cred.desktop_id, context_uri=cred.playlist_id)
 
     # set volume to mute and shuffle (which also ensures repeat) to run in the background
-    sp.volume(0)
-    sp.shuffle(True)
+    # sp.volume(0)
+    # sp.shuffle(True)
 
 
 if __name__ == "__main__":

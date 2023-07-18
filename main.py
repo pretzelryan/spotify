@@ -36,6 +36,9 @@ def start_playback(sp, playlist):
     except spotipy.exceptions.SpotifyException as e:
         print(f"[{datetime.datetime.now()}] Spotify Exception Occurred\n", e)
 
+    except:
+        print(f"[{datetime.datetime.now()}] Other error has occurred.")
+
 
 def check_playback(sp):
     # callback function to regularly check playback status
